@@ -1,0 +1,80 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
+// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
+
+generator client {
+  provider = "prisma-client-js"
+  // output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+
+
+model User {
+  id         Int      @id @default(autoincrement())
+  username   String   @unique
+  email      String   @unique
+  password   String
+  created_at DateTime @default(now())
+  updated_at DateTime @updatedAt
+
+  // 1 User -> Many Tasks
+  tasks      Task[]
+}
+
+model Task {
+  id          Int           @id @default(autoincrement())
+  title       String
+  description String?
+  status      TaskStatus
+  priority    TaskPriority
+  due_date    DateTime?
+  created_by  Int
+  created_at  DateTime      @default(now())
+  updated_at  DateTime      @updatedAt
+
+  // Relation: Many Tasks -> One User
+  user        User          @relation(fields: [created_by], references: [id])
+
+  // 1 Task -> Many TaskLabels
+  task_labels TaskLabel[]
+}
+
+model Label {
+  id          Int         @id @default(autoincrement())
+  name        String
+  color       String
+
+  // 1 Label -> Many TaskLabels
+  task_labels TaskLabel[]
+}
+
+model TaskLabel {
+  id       Int   @id @default(autoincrement())
+  task_id  Int
+  label_id Int
+
+  // Relations
+  task     Task  @relation(fields: [task_id], references: [id])
+  label    Label @relation(fields: [label_id], references: [id])
+}
+
+enum TaskStatus {
+  TODO
+  IN_PROGRESS
+  COMPLETED
+  BLOCKED
+}
+
+enum TaskPriority {
+  LOW
+  MEDIUM
+  HIGH
+  URGENT
+}
