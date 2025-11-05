@@ -1,4 +1,4 @@
-Task Manager API
+
 
 A backend API for managing tasks and labels, built with **Node.js**, **Express**, **Prisma**, and **PostgreSQL**. Includes authentication (JWT), task CRUD operations, label management, pagination, filtering, and Swagger API documentation.
 
@@ -89,19 +89,18 @@ npx prisma generate
 ```
 
 
-### 5. Seed the database (optional)
 
-If you have a seed file:
 
-`node prisma/seed.js`
-
-### 6. Run the development server
+### 5. Run the development server
 
 ``` bash
 npm run dev
 ```
 
 Server will start at `http://localhost:5000`  
+
+### 6. Swagger Docs:
+
 Swagger docs available at `http://localhost:5000/api-docs`
 
 ---
@@ -238,7 +237,7 @@ You can test the API using **Postman**.
 ```
 
 - **Response (201):**
-    
+
 
 ```json 
 {   
@@ -320,7 +319,6 @@ You can test the API using **Postman**.
     ```
 
 - **Response (201):**
-    
 
 ``` json
 {
@@ -333,6 +331,7 @@ You can test the API using **Postman**.
 }
 
 ```
+
 ---
 
 ### **2. Get All Labels**
@@ -341,7 +340,7 @@ You can test the API using **Postman**.
 - **Headers:**  
     `Authorization: Bearer <accessToken>`
 - **Response (200):**
-    
+
 
 ```json
 {
